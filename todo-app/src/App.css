@@ -1,0 +1,50 @@
+body {
+  background-image: url("https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  font-family: Roboto;
+}
+
+.todoMainApp {
+  text-align: center;
+  justify-content: center;
+  background-color: rgba(1, 1, 1, 0.349);
+  opacity: 1;
+  width: 30%;
+
+  padding: 32px 48px;
+  margin-top: 64px;
+  margin-bottom: 64px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+}
+
+input {
+  background-color: transparent !important;
+  border: 1px solid gray;
+}
+
+.reset-button,
+.submit-button {
+  margin-left: 5px;
+}
+
+.delete-button,
+.complete-button {
+  margin-left: 1px;
+}
+
+.is-complete {
+  font-style: italic;
+  text-decoration: line-through;
+}
+
+.table {
+  word-break: break-all;
+  color: white;
+}
+
+.headTitle {
+  color: white;
+}
