@@ -16,13 +16,34 @@ mongoose.connect(
 );
 
 app.get("/read", async (req, res) => {
-  todoTasks.find({}, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
+  try {
+    let query = todoTasks.find({});
 
-    res.send(result);
-  });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 5;
+    const skip = (page - 1) * pageSize;
+    const total = await todoTasks.countDocuments();
+
+    const pages = Math.ceil(total / pageSize);
+
+    query = query.skip(skip).limit(pageSize);
+    const result = await query;
+
+    res.status(200).json({
+      status: "Success",
+      count: result.length,
+      page,
+      pages,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      status: "Failed",
+      message: "Server Error 🆘 ",
+    });
+  }
 });
 
 app.post("/insert", async (req, res) => {

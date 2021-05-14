@@ -22,7 +22,7 @@ body {
 
 input {
   background-color: transparent !important;
-  border: 1px solid gray;
+  border: 1px solid #ced4da;
 }
 
 .reset-button,
@@ -33,6 +33,22 @@ input {
 .delete-button,
 .complete-button {
   margin-left: 1px;
+}
+
+.task-input {
+  color: white;
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}
+
+.table th {
+  border-top: none;
+}
+
+.task-input:focus {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+  color: white;
 }
 
 .is-complete {
@@ -47,4 +63,14 @@ input {
 
 .headTitle {
   color: white;
+}
+
+.pagination-buttons {
+  margin: 2px;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.55rem;
+}
+
+.pagination-container {
+  text-align: end;
 }

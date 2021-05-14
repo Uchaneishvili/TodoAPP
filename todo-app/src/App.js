@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+import Pagination from "./Components/Pagination";
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
@@ -8,6 +9,7 @@ function App() {
   const [isCompleted, setIsCompleted] = useState({
     activeObject: false,
   });
+  const [pages, setPages] = useState();
   const [showTable, setshowTable] = useState(false);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ function App() {
   }, [tasksList.length]);
 
   useEffect(() => {
-    loadData();
+    loadData(1);
   }, []);
 
   const selectAsComplete = () => {
@@ -31,24 +33,25 @@ function App() {
       name: inputValue,
     });
     setInputValue("");
-    loadData();
+    loadData(1);
   };
 
   const userInput = (event) => {
     setInputValue(event.target.value);
   };
 
-  const loadData = async () => {
-    let url = "http://localhost:3001/read";
+  const loadData = async (page) => {
+    let url = `http://localhost:3001/read?page=${page}`;
 
     await axios.get(url).then((response) => {
-      setTasksList(response.data);
+      setTasksList(response.data.data);
+      setPages(response.data.pages);
     });
   };
 
   const deleteTask = async (id) => {
     await axios.delete(`http://localhost:3001/delete/${id}`);
-    loadData();
+    loadData(1);
     setInputValue("");
   };
 
@@ -135,6 +138,7 @@ function App() {
       ) : (
         " "
       )}
+      <Pagination />
     </div>
   );
 }
