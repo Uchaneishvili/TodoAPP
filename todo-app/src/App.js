@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import Pagination from "./Components/Pagination";
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
@@ -9,7 +8,8 @@ function App() {
   const [isCompleted, setIsCompleted] = useState({
     activeObject: false,
   });
-  const [pages, setPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
   const [showTable, setshowTable] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,10 @@ function App() {
     loadData(1);
   }, []);
 
+  useEffect(() => {
+    loadData(currentPage);
+  }, [currentPage]);
+
   const selectAsComplete = () => {
     setIsCompleted({ ...isCompleted, activeObject: true });
   };
@@ -33,7 +37,7 @@ function App() {
       name: inputValue,
     });
     setInputValue("");
-    loadData(1);
+    loadData(currentPage);
   };
 
   const userInput = (event) => {
@@ -45,14 +49,22 @@ function App() {
 
     await axios.get(url).then((response) => {
       setTasksList(response.data.data);
-      setPages(response.data.pages);
+      setTotalPages(response.data.pages);
     });
   };
 
   const deleteTask = async (id) => {
     await axios.delete(`http://localhost:3001/delete/${id}`);
-    loadData(1);
+    loadData(currentPage);
     setInputValue("");
+  };
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage(currentPage - 1);
   };
 
   const generateTable = () => {
@@ -63,7 +75,7 @@ function App() {
       table.push(
         <tr key={tasksList[i]._id}>
           <td className={isCompleted.activeObject ? "is-complete" : ""}>
-            {i + 1}
+            {i + 1 * 5 * (currentPage - 1) + 1}
           </td>
           <td className={isCompleted.activeObject ? "is-complete" : ""}>
             {names[i]}
@@ -138,7 +150,33 @@ function App() {
       ) : (
         " "
       )}
-      <Pagination />
+
+      {showTable ? (
+        <div className="pagination-container">
+          <button
+            className="btn btn-outline-light pagination-buttons"
+            disabled={currentPage === 1}
+            onClick={() => previousPage()}
+          >
+            {"<"}
+          </button>
+          <button
+            className="btn btn-outline-light pagination-buttons current-page"
+            disabled
+          >
+            {currentPage}
+          </button>
+          <button
+            className="btn btn-outline-light pagination-buttons"
+            disabled={currentPage === totalPages}
+            onClick={() => nextPage()}
+          >
+            {">"}
+          </button>
+        </div>
+      ) : (
+        " "
+      )}
     </div>
   );
 }

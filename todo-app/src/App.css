@@ -74,3 +74,13 @@ input {
 .pagination-container {
   text-align: end;
 }
+
+.current-page {
+  cursor: auto;
+}
+
+.current-page:disabled {
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+  opacity: 1;
+}
