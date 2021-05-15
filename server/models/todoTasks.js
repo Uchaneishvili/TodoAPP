@@ -5,6 +5,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  overline: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const todoTasks = mongoose.model("tasks", taskSchema);

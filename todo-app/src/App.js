@@ -5,20 +5,10 @@ import "./App.css";
 function App() {
   const [tasksList, setTasksList] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [isCompleted, setIsCompleted] = useState({
-    activeObject: false,
-  });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
-  const [showTable, setshowTable] = useState(false);
-
-  useEffect(() => {
-    if (tasksList.length < 1) {
-      return setshowTable(false);
-    } else {
-      return setshowTable(true);
-    }
-  }, [tasksList.length]);
+  const [overline, setOverline] = useState(false);
+  const [taskDetail, setTaskDetail] = useState([]);
 
   useEffect(() => {
     loadData(1);
@@ -28,14 +18,22 @@ function App() {
     loadData(currentPage);
   }, [currentPage]);
 
-  const selectAsComplete = () => {
-    setIsCompleted({ ...isCompleted, activeObject: true });
+  const selectAsComplete = (task) => {
+    console.log(taskDetail);
+    console.log(task);
+    task.overline = !task.overline;
+    addOrUpdateTask(task);
   };
 
-  const addOrUpdateTask = async () => {
-    await axios.post("http://localhost:3001/insert", {
-      name: inputValue,
-    });
+  const addOrUpdateTask = async (task) => {
+    if (task && task._id) {
+      await axios.put("http://localhost:3001/update", task);
+    } else {
+      await axios.post("http://localhost:3001/insert", {
+        name: inputValue,
+        overline: false,
+      });
+    }
     setInputValue("");
     loadData(currentPage);
   };
@@ -45,6 +43,7 @@ function App() {
   };
 
   const loadData = async (page) => {
+    setTasksList([]);
     let url = `http://localhost:3001/read?page=${page}`;
 
     await axios.get(url).then((response) => {
@@ -69,16 +68,15 @@ function App() {
 
   const generateTable = () => {
     const table = [];
-    const names = tasksList.map((task) => task.name);
 
     for (let i = 0; i < tasksList.length; i++) {
       table.push(
         <tr key={tasksList[i]._id}>
-          <td className={isCompleted.activeObject ? "is-complete" : ""}>
-            {i + 1 * 5 * (currentPage - 1) + 1}
+          <td className={tasksList[i].overline ? "is-complete" : ""}>
+            {5 * (currentPage - 1) + (i + 1)}
           </td>
-          <td className={isCompleted.activeObject ? "is-complete" : ""}>
-            {names[i]}
+          <td className={tasksList[i].overline ? "is-complete" : ""}>
+            {tasksList[i].name}
           </td>
           <td>
             <button
@@ -98,7 +96,7 @@ function App() {
             <button
               type="button"
               className="btn btn-success complete-button"
-              onClick={() => selectAsComplete()}
+              onClick={() => selectAsComplete(tasksList[i])}
             >
               <img
                 className="complete-icon"
@@ -136,7 +134,7 @@ function App() {
           Add Task
         </button>
       </div>
-      {showTable ? (
+      {tasksList.length ? (
         <table className="table">
           <thead>
             <tr>
@@ -151,7 +149,7 @@ function App() {
         " "
       )}
 
-      {showTable ? (
+      {tasksList.length ? (
         <div className="pagination-container">
           <button
             className="btn btn-outline-light pagination-buttons"

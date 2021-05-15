@@ -46,11 +46,24 @@ app.get("/read", async (req, res) => {
   }
 });
 
+app.get("/read/:id", async (req, res) => {
+  const id = req.params.id;
+
+  todoTasks.findById(id, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(result);
+  });
+});
+
 app.post("/insert", async (req, res) => {
   const { name } = req.body;
 
   const task = new todoTasks({
     name: name,
+    overline: false,
   });
   try {
     await task.save();
@@ -61,6 +74,21 @@ app.post("/insert", async (req, res) => {
   }
 });
 
+app.put("/update", async (req, res) => {
+  const { name, overline, _id } = req.body;
+
+  try {
+    const updateTask = await todoTasks.findById(_id);
+    updateTask.name = name;
+    updateTask.overline = overline;
+
+    updateTask.save();
+
+    res.send("update tasks");
+  } catch (error) {
+    console.log(error);
+  }
+});
 app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
   await todoTasks.findByIdAndRemove(id).exec();
