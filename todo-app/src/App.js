@@ -7,8 +7,6 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
-  const [overline, setOverline] = useState(false);
-  const [taskDetail, setTaskDetail] = useState([]);
 
   useEffect(() => {
     loadData(1);
@@ -19,7 +17,6 @@ function App() {
   }, [currentPage]);
 
   const selectAsComplete = (task) => {
-    console.log(taskDetail);
     console.log(task);
     task.overline = !task.overline;
     addOrUpdateTask(task);

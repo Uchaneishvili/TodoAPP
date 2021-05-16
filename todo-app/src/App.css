@@ -11,7 +11,7 @@ body {
   background-color: rgba(1, 1, 1, 0.349);
   opacity: 1;
   width: 30%;
-
+  min-height: 572px;
   padding: 32px 48px;
   margin-top: 64px;
   margin-bottom: 64px;
