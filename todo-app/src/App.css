@@ -1,8 +1,11 @@
 body {
   background-image: url("https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover; /* Resize the background image to cover the entire container */
+  background-position: center;
+  background-attachment: fixed;
   font-family: Roboto;
+  width: 100%;
 }
 
 .todoMainApp {
@@ -13,10 +16,10 @@ body {
   width: 30%;
   min-height: 572px;
   padding: 32px 48px;
-  margin-top: 64px;
-  margin-bottom: 64px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 5%;
+  margin-bottom: 5px;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
   border-radius: 10px;
 }
 
@@ -85,18 +88,59 @@ input {
   opacity: 1;
 }
 
-@media screen and (max-width: 800px) {
-  .todoMainApp {
-    width: 100%;
-    height: 100%;
-    vertical-align: center;
+tr {
+  font-size: 1vw;
+}
+
+h1 {
+  font-size: 2vw;
+}
+
+@media screen and (max-width: 1300px) {
+  body {
+    overflow: auto;
   }
 
-  body {
+  .todoMainApp {
+    width: 100vw;
+    height: 100vh;
+    margin-top: 0vh;
+    overflow: hidden;
+  }
+
+  tr {
+    font-size: 2.5vw;
+  }
+
+  h1 {
+    font-size: 5vw;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .todoMainApp {
+    width: 100vw;
+    height: 100vh;
+    margin-top: 0vh;
+  }
+
+  /* body {
     background-image: url("https://wallpaperarc.com/wp-content/uploads/2021/04/Car-Mobile-Wallpaper-1440x2560-28-506x900.jpg");
     background-repeat: no-repeat;
-    background-size: 100%;
-    height: 100%;
-    overflow: hidden;
+    background-attachment: fixed;
+    background-size: auto;
+    height: 100vh;
+  } */
+
+  .buttons-container {
+    display: flex;
+  }
+
+  tr {
+    font-size: 3.5vw;
+  }
+
+  h1 {
+    font-size: 6vw;
   }
 }

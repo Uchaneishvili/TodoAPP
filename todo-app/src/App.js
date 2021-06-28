@@ -75,7 +75,7 @@ function App() {
           <td className={tasksList[i].overline ? "is-complete" : ""}>
             {tasksList[i].name}
           </td>
-          <td>
+          <td className="buttons-container">
             <button
               type="button"
               className="btn btn-danger delete-button"
