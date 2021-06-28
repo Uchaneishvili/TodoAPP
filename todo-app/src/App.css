@@ -84,3 +84,19 @@ input {
   border-color: #f8f9fa;
   opacity: 1;
 }
+
+@media screen and (max-width: 800px) {
+  .todoMainApp {
+    width: 100%;
+    height: 100%;
+    vertical-align: center;
+  }
+
+  body {
+    background-image: url("https://wallpaperarc.com/wp-content/uploads/2021/04/Car-Mobile-Wallpaper-1440x2560-28-506x900.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}

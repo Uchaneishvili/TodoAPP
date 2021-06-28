@@ -81,13 +81,7 @@ function App() {
               className="btn btn-danger delete-button"
               onClick={() => deleteTask(tasksList[i]._id)}
             >
-              <img
-                className="delete-icon"
-                width="10px"
-                height="10px"
-                alt="delete icon"
-                src="https://www.flaticon.com/svg/vstatic/svg/3096/3096673.svg?token=exp=1620930418~hmac=6cf7e82f2391b78faf55a57d174c9c1d"
-              ></img>
+              <ion-icon name="trash-outline"></ion-icon>
             </button>
 
             <button
@@ -95,13 +89,7 @@ function App() {
               className="btn btn-success complete-button"
               onClick={() => selectAsComplete(tasksList[i])}
             >
-              <img
-                className="complete-icon"
-                width="10px"
-                height="10px"
-                alt="check icon"
-                src="https://www.flaticon.com/svg/vstatic/svg/860/860798.svg?token=exp=1620931221~hmac=6070ef761136aa2375b6adf8553c7040"
-              ></img>
+              <ion-icon name="checkmark-done-outline"></ion-icon>
             </button>
           </td>
         </tr>
